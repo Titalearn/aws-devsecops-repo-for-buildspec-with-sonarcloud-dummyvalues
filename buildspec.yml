@@ -1,12 +1,11 @@
 version: 0.2
 env:
-    variables:
-      SONAR_HOST_URL: http://23.23.18.123:9000
-      SONAR_TOKEN: d87c1e1a56438dc1b3db6d5219c31119550ca058
+    secrets-manager:
+      SONAR_TOKEN: "dev/sonarqube/token:SONAR_TOKEN"
 phases:
   install:
     runtime-versions:
-      java: latest
+      java: corretto17 # Pin to a specific Java version for reproducible builds
   build:
     commands:
       - mvn verify sonar:sonar -Dsonar.projectKey=Javaproject-0 -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN
